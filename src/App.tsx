@@ -1,0 +1,23 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import { Home, NewTask, NotFound } from "./pages";
+import { Sidebar } from "./components";
+
+function App() {
+  return (
+    <BrowserRouter>
+      <div className="app-container">
+        <Sidebar />
+        <main className="main-content">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/new-task" element={<NewTask />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+      </div>
+    </BrowserRouter>
+  );
+}
+
+export default App;

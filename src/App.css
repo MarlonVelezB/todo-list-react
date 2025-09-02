@@ -1,0 +1,222 @@
+#root {
+  /* === PALETA PRINCIPAL - AZUL BOOTSTRAP EVOLUCIONADO === */
+  --primary-50: #e6f3ff;
+  --primary-100: #b3d9ff;
+  --primary-200: #80bfff;
+  --primary-300: #4da6ff;
+  --primary-400: #1a8cff;
+  --primary-500: #007bff;
+  /* Tu azul base - Bootstrap Blue */
+  --primary-600: #0056b3;
+  --primary-700: #004085;
+  --primary-800: #002952;
+  --primary-900: #001a33;
+
+  /* === ACENTO COMPLEMENTARIO - CORAL VIBRANTE === */
+  --accent-50: #fff5f0;
+  --accent-100: #ffe4d6;
+  --accent-200: #ffc9a3;
+  --accent-300: #ffad70;
+  --accent-400: #ff923d;
+  --accent-500: #ff7700;
+  /* Naranja complementario perfecto */
+  --accent-600: #e55a00;
+  --accent-700: #cc4400;
+  --accent-800: #b32d00;
+  --accent-900: #991700;
+
+  /* === GRISES SOFISTICADOS === */
+  --neutral-50: #f8f9fa;
+  --neutral-100: #f1f3f4;
+  --neutral-200: #e9ecef;
+  --neutral-300: #dee2e6;
+  --neutral-400: #adb5bd;
+  --neutral-500: #6c757d;
+  --neutral-600: #495057;
+  --neutral-700: #343a40;
+  --neutral-800: #212529;
+  --neutral-900: #0d1117;
+
+  /* === COLORES DE ESTADO REFINADOS === */
+  /* Éxito - Verde profesional */
+  --success-50: #eafaf1;
+  --success-100: #c3f0d3;
+  --success-400: #48d364;
+  --success-500: #28a745;
+  /* Verde Bootstrap actualizado */
+  --success-600: #1e7e34;
+  --success-700: #155724;
+
+  /* Advertencia - Amarillo dorado */
+  --warning-50: #fffbf0;
+  --warning-100: #ffeaa7;
+  --warning-400: #ffce67;
+  --warning-500: #ffc107;
+  /* Amarillo Bootstrap */
+  --warning-600: #e0a800;
+  --warning-700: #b7890b;
+
+  /* Error - Rojo equilibrado */
+  --error-50: #fdf2f2;
+  --error-100: #fce8e8;
+  --error-400: #f56565;
+  --error-500: #dc3545;
+  /* Rojo Bootstrap */
+  --error-600: #c82333;
+  --error-700: #a02622;
+
+  /* Información - Tu azul en versión más clara */
+  --info-50: #e6f7ff;
+  --info-100: #b3e5fc;
+  --info-400: #29b6f6;
+  --info-500: #17a2b8;
+  /* Cyan Bootstrap */
+  --info-600: #138496;
+  --info-700: #0f6674;
+
+  /* === FONDOS PREMIUM === */
+  --bg-white: #ffffff;
+  --bg-light: #f8f9fa;
+  /* Gris muy claro */
+  --bg-surface: #f1f3f4;
+  /* Superficie elevada */
+  --bg-muted: #e9ecef;
+  /* Fondo sutil */
+  --bg-overlay: rgba(13, 17, 23, 0.4);
+  --bg-glass: rgba(255, 255, 255, 0.85);
+
+  /* === TEXTO PROFESIONAL === */
+  --text-primary: #212529;
+  /* Casi negro */
+  --text-secondary: #495057;
+  /* Gris medio */
+  --text-tertiary: #6c757d;
+  /* Gris claro */
+  --text-muted: #adb5bd;
+  /* Muy sutil */
+  --text-inverse: #ffffff;
+  --text-accent: #007bff;
+  /* Tu azul para enlaces */
+
+  /* === BORDES LIMPIOS === */
+  --border-light: #f1f3f4;
+  --border-medium: #e9ecef;
+  --border-strong: #dee2e6;
+  --border-accent: #007bff;
+  --border-focus: #0056b3;
+
+  /* === SOMBRAS PROFESIONALES === */
+  --shadow-soft: 0 2px 4px rgba(13, 17, 23, 0.08);
+  --shadow-medium: 0 4px 12px rgba(13, 17, 23, 0.12);
+  --shadow-large: 0 8px 32px rgba(13, 17, 23, 0.16);
+  --shadow-floating: 0 12px 48px rgba(13, 17, 23, 0.20);
+  --shadow-blue: 0 0 0 3px rgba(0, 123, 255, 0.15);
+
+  /* === GRADIENTES BASADOS EN TU AZUL === */
+  --gradient-primary: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  --gradient-accent: linear-gradient(135deg, #ff7700 0%, #e55a00 100%);
+  --gradient-success: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+  --gradient-surface: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  --gradient-sky: linear-gradient(135deg, #e6f3ff 0%, #b3d9ff 100%);
+
+  /* === COLORES ESPECÍFICOS PARA GESTIÓN === */
+  /* Prioridades intuitivas */
+  --priority-critical: #dc3545;
+  /* Rojo Bootstrap */
+  --priority-high: #ff7700;
+  /* Naranja vibrante */
+  --priority-medium: #ffc107;
+  /* Amarillo Bootstrap */
+  --priority-low: #28a745;
+  /* Verde Bootstrap */
+  --priority-none: #6c757d;
+  /* Gris neutro */
+
+  /* Estados de workflow claros */
+  --status-draft: #adb5bd;
+  /* Borrador */
+  --status-pending: #ffc107;
+  /* Pendiente */
+  --status-review: #007bff;
+  /* En revisión - tu azul */
+  --status-progress: #17a2b8;
+  /* En progreso */
+  --status-completed: #28a745;
+  /* Completado */
+  --status-archived: #495057;
+  /* Archivado */
+  --status-cancelled: #dc3545;
+  /* Cancelado */
+
+  /* Categorías con base en tu azul */
+  --category-primary: #007bff;
+  /* Principal */
+  --category-design: #6f42c1;
+  /* Púrpura Bootstrap */
+  --category-dev: #20c997;
+  /* Teal Bootstrap */
+  --category-marketing: #ff7700;
+  /* Naranja */
+  --category-sales: #28a745;
+  /* Verde */
+  --category-support: #ffc107;
+  /* Amarillo */
+  --category-finance: #dc3545;
+  /* Rojo */
+  --category-hr: #6c757d;
+  /* Gris */
+
+  /* === MODO OSCURO PROFESIONAL === */
+  --dark-bg-primary: #0d1117;
+  --dark-bg-secondary: #212529;
+  --dark-bg-tertiary: #343a40;
+  --dark-bg-elevated: #495057;
+  --dark-text-primary: #f8f9fa;
+  --dark-text-secondary: #dee2e6;
+  --dark-text-tertiary: #adb5bd;
+  --dark-border: #495057;
+  --dark-overlay: rgba(248, 249, 250, 0.1);
+  --dark-primary: #4da6ff;
+  /* Tu azul más claro para dark mode */
+
+  max-width: 1280px;
+  margin: 0;
+}
+
+/* Contenedor principal */
+.app-container {
+  display: flex;
+  height: 100vh;
+  /* Altura completa de la ventana del navegador */
+  overflow: hidden;
+  /* Evita scroll en el contenedor principal */
+}
+
+/* Área de contenido principal */
+.main-content {
+  flex: 1;
+  /* Toma todo el espacio restante */
+  overflow-y: auto;
+  /* Solo esta área tiene scroll vertical */
+  overflow-x: hidden;
+  /* Evita scroll horizontal */
+  padding: 20px;
+}
+
+/* Opcional: Personalizar la scrollbar */
+.main-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.main-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.main-content::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

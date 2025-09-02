@@ -1,0 +1,156 @@
+/* SidebarFooter.css */
+
+.sidebar-footer {
+  margin-top: auto; /* Empuja el footer hacia abajo */
+  padding: 1rem;
+  border-top: 1px solid #e0e0e0;
+  background-color: #f9f9f9;
+}
+
+.sidebar-footer-user {
+  margin-bottom: 0.75rem;
+}
+
+.sidebar-footer-user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-align: left;
+}
+
+.sidebar-footer-user-info:hover {
+  background-color: #e8e8e8;
+}
+
+.sidebar-footer-user-info:focus {
+  outline: 2px solid #007acc;
+  outline-offset: 2px;
+}
+
+.sidebar-footer-avatar {
+  width: 32px;
+  height: 32px;
+  background-color: #007acc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.sidebar-footer-user-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0; /* Permite que el texto se trunque */
+}
+
+.sidebar-footer-username {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-footer-useremail {
+  font-size: 0.75rem;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-footer-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  color: var(--primary-500);
+}
+
+.sidebar-footer-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+}
+
+.sidebar-footer-action:hover {
+  background-color: #e8e8e8;
+  border-color: #ccc;
+}
+
+.sidebar-footer-action:focus {
+  outline: 2px solid #007acc;
+  outline-offset: 2px;
+}
+
+.sidebar-footer-logout:hover {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+}
+
+/* Responsivo para sidebars más estrechos */
+@media (max-width: 250px) {
+  .sidebar-footer-user-details {
+    display: none;
+  }
+  
+  .sidebar-footer-actions {
+    justify-content: center;
+  }
+}
+
+/* Modo oscuro */
+/* @media (prefers-color-scheme: dark) {
+  .sidebar-footer {
+    border-top-color: #333;
+    background-color: #2a2a2a;
+  }
+
+  .sidebar-footer-user-info:hover {
+    background-color: #3a3a3a;
+  }
+
+  .sidebar-footer-username {
+    color: #f0f0f0;
+  }
+
+  .sidebar-footer-useremail {
+    color: #ccc;
+  }
+
+  .sidebar-footer-action {
+    border-color: #444;
+    color: #ccc;
+  }
+
+  .sidebar-footer-action:hover {
+    background-color: #3a3a3a;
+    border-color: #555;
+    color: #f0f0f0;
+  }
+
+  .sidebar-footer-logout:hover {
+    background-color: #4a2c2c;
+    border-color: #5a3a3a;
+  }
+} */
