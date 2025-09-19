@@ -26,24 +26,28 @@ const ProgressStats = ({
 
   const stats = [
     {
+      key: "total",
       label: "Total",
       value: total ? total : 0,
       icon: <FaClipboardList />,
       color: "text-blue-500",
     },
     {
+      key: "active",
       label: "Activas",
       value: taskActive ? taskActive : total - taskCounts,
       icon: <FaClock />,
       color: "text-yellow-500",
     },
     {
+      key: "completed",
       label: "Completadas",
       value: taskCompleted ? taskCompleted : taskCounts,
       icon: <FaCheckCircle />,
       color: "text-green-500",
     },
     {
+      key: "overdue",
       label: "Vencidas",
       value: taskOverdue ? taskOverdue : 0,
       icon: <TbAlertOctagonFilled />,
@@ -81,7 +85,7 @@ const ProgressStats = ({
         {/* Stats */}
       <div className="m-10 flex justify-around gap-2">
         {stats.map((stat) => (
-          <div className="flex flex-col justify-center items-center text-muted-foreground w-fit text-2xl">
+          <div key={stat.key} className="flex flex-col justify-center items-center text-muted-foreground w-fit text-2xl">
             {stat.icon && (
               <div className={`mb-1 ${stat.color} text-3xl mb-2`}>{stat.icon}</div>
             )}
