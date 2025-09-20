@@ -2,12 +2,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import InputComponent from "../../../components/ui/InputComponent";
-import { useDialog } from "../../../components/dialog/DialogComponent";
 import SelectComponent from "../../../components/ui/SelectComponent";
 
 import DatePickerComponent from "../../../components/ui/DatePickerComponent";
-import { Button, Divider } from "@mui/material";
+import { Divider } from "@mui/material";
 import { FaPlus } from "react-icons/fa";
+import ButtoComponent from "../../../components/ui/ButtonComponent";
+import { useDialogStore } from "../../../components/dialog/DialogStore";
 
 const schema = yup.object({
   title: yup
@@ -42,11 +43,15 @@ const TaskForm: React.FC = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  const { closeDialog } = useDialog();
+  const { closeDialog } = useDialogStore();
 
   const onSubmit = (data: any) => {
     console.log("Datos:", data);
-    closeDialog(); // usar zustand para cerrar el diálogo
+    closeDialog(); 
+  };
+
+  const onCancel = () => {
+    closeDialog();
   };
 
   const categories = [
@@ -69,6 +74,7 @@ const TaskForm: React.FC = () => {
           type={"text"}
           error={errors.title}
           placeholder="Do anything..."
+          required
           {...register("title")}
         />
         <InputComponent
@@ -107,6 +113,7 @@ const TaskForm: React.FC = () => {
                 options={priorities}
                 placeholder="Select priority"
                 error={errors.priority}
+                required
                 {...field}
               />
             )}
@@ -121,6 +128,7 @@ const TaskForm: React.FC = () => {
               label="Select Due Date"
               error={errors.dueDate}
               placeholder="Due Date"
+              required
               {...field}
             />
           )}
@@ -130,34 +138,8 @@ const TaskForm: React.FC = () => {
       <Divider />
 
       <div className="flex justify-end gap-2 mt-4">
-        <Button
-          variant="text"
-          sx={{
-            color: "black",
-            border: "1px solid #f8f9fa",
-            "&:hover": {
-              color: "#fff",
-              backgroundColor: "#ef4444", // 
-            },
-          }}
-        >
-          <span className="ml-2">Cancel</span>
-        </Button>
-
-        <Button
-        type="submit"
-          variant="contained"
-          sx={{
-            backgroundColor: "#3b82f6",
-            color: "#fff",
-            "&:hover": {
-              backgroundColor: "#2563eb",
-            },
-          }}
-        >
-          <FaPlus />
-          <span className="ml-2">Create Task</span>
-        </Button>
+        <ButtoComponent label="Cancel" variant="text" style="error-text" onClick={onCancel}/>
+        <ButtoComponent type="submit" label="Create Task" variant="contained" style="primary" icon={<FaPlus />}/>
       </div>
     </form>
   );

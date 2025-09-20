@@ -12,6 +12,7 @@ interface SelectFieldProps {
   error?: FieldError;
   placeholder?: string;
   disabled?: boolean;
+  required?: boolean;
   options: SelectOption[];
   name: string;
   onChange: (event: SelectChangeEvent<string | number>) => void;
@@ -28,7 +29,7 @@ const SelectComponent = React.forwardRef<any, SelectFieldProps>(
             !!error && "text-red-500"
           }`}
         >
-          {label}:
+          {props.required && <span className="text-red-500 font-medium">*</span>}{label}:
         </label>
         <div>
           <Select

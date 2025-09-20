@@ -10,8 +10,9 @@ import {
   Typography,
 } from "@mui/material";
 import type { TransitionProps } from "@mui/material/transitions";
-import { forwardRef, useCallback, useState, type ReactNode } from "react";
+import { forwardRef, type ReactNode } from "react";
 import { IoClose } from "react-icons/io5";
+import { useDialogStore } from "./DialogStore";
 
 // Transición personalizable
 const Transition = forwardRef(function Transition(
@@ -33,13 +34,13 @@ interface DialogAction {
 }
 
 interface DialogComponentProps {
-  open: boolean;
   onClose: () => void;
   title?: string | ReactNode;
   content?: string | ReactNode;
   actions?: DialogAction[];
   maxWidth?: "xs" | "sm" | "md" | "lg" | "xl";
   fullWidth?: boolean;
+  hiddenAcctions?: boolean;
   showCloseButton?: boolean;
   disableBackdropClick?: boolean;
   disableEscapeKeyDown?: boolean;
@@ -49,7 +50,6 @@ interface DialogComponentProps {
 }
 
 const DialogComponent = ({
-  open,
   onClose,
   title,
   content,
@@ -57,42 +57,42 @@ const DialogComponent = ({
   maxWidth = "sm",
   fullWidth = true,
   showCloseButton = true,
-  disableBackdropClick = false,
-  disableEscapeKeyDown = false,
   keepMounted = false,
   className,
+  hiddenAcctions,
+  disableBackdropClick = true,
+  disableEscapeKeyDown = true,
   "aria-describedby": ariaDescribedBy,
 }: DialogComponentProps) => {
+  const { isOpen, closeDialog } = useDialogStore();
 
-  const handleClose = (reason?: string) => {
-    // Prevenir cierre si está deshabilitado
-    if (reason === "backdropClick" && disableBackdropClick) return;
+  const handkeClose = (reason: string) => {
+    if (disableBackdropClick && reason === "backdropClick") return;
     if (reason === "escapeKeyDown" && disableEscapeKeyDown) return;
-    
-    onClose();
+    closeDialog();
   };
 
   // Acciones por defecto si no se proporcionan
-  // const defaultActions: DialogAction[] = [
-  //   {
-  //     label: "Cancelar",
-  //     onClick: onClose,
-  //     variant: "text",
-  //   },
-  //   {
-  //     label: "Aceptar",
-  //     onClick: onClose,
-  //     variant: "contained",
-  //     color: "primary",
-  //   },
-  // ];
+  const defaultActions: DialogAction[] = [
+    {
+      label: "Cancelar",
+      onClick: onClose,
+      variant: "text",
+    },
+    {
+      label: "Aceptar",
+      onClick: onClose,
+      variant: "contained",
+      color: "primary",
+    },
+  ];
 
-  // const dialogActions = actions || defaultActions;
+  const dialogActions = actions || defaultActions;
 
   return (
     <Dialog
-      open={open}
-      onClose={(_, reason) => handleClose(reason)}
+      open={isOpen}
+      onClose={(_, reason) => handkeClose(reason)}
       slots={{
         transition: Transition,
       }}
@@ -102,6 +102,7 @@ const DialogComponent = ({
         },
       }}
       keepMounted={keepMounted}
+
       maxWidth={maxWidth}
       fullWidth={fullWidth}
       className={className}
@@ -119,7 +120,7 @@ const DialogComponent = ({
         <Typography variant="h6" component="div">
           {title || "Confirmación"}
         </Typography>
-        
+
         {showCloseButton && (
           <IconButton
             aria-label="cerrar"
@@ -144,44 +145,30 @@ const DialogComponent = ({
               {content}
             </DialogContentText>
           ) : (
-            <div id={ariaDescribedBy || "dialog-description"}>
-              {content}
-            </div>
+            <div id={ariaDescribedBy || "dialog-description"}>{content}</div>
           )}
         </DialogContent>
       )}
 
       {/* Acciones */}
-      {/* <DialogActions sx={{ px: 3, pb: 2 }}>
-        {dialogActions.map((action, index) => (
-          <Button
-            key={`${action.label}-${index}`}
-            onClick={action.onClick}
-            variant={action.variant || "text"}
-            color={action.color || "primary"}
-            disabled={action.disabled}
-            sx={{ minWidth: "80px" }}
-          >
-            {action.label}
-          </Button>
-        ))}
-      </DialogActions> */}
+      {hiddenAcctions && (
+        <DialogActions sx={{ px: 3, pb: 2 }}>
+          {dialogActions.map((action, index) => (
+            <Button
+              key={`${action.label}-${index}`}
+              onClick={action.onClick}
+              variant={action.variant || "text"}
+              color={action.color || "primary"}
+              disabled={action.disabled}
+              sx={{ minWidth: "80px" }}
+            >
+              {action.label}
+            </Button>
+          ))}
+        </DialogActions>
+      )}
     </Dialog>
   );
 };
 
 export default DialogComponent;
-
-// Hook personalizado para facilitar el uso
-export const useDialog = (initialState = false) => {
-  const [open, setOpen] = useState(initialState);
-
-  const openDialog = useCallback(() => setOpen(true), []);
-  const closeDialog = useCallback(() => setOpen(false), []);
-  
-  return {
-    open,
-    openDialog,
-    closeDialog,
-  };
-};
