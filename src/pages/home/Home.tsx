@@ -4,11 +4,12 @@ import TaskFilters from "./components/TaskFilters";
 import TaskList from "./components/TaskList";
 import { Fab } from "@mui/material";
 import { FaPlus } from "react-icons/fa";
-import DialogComponent, { useDialog } from "../../components/dialog/DialogComponent";
+import DialogComponent from "../../components/dialog/DialogComponent";
 import TaskForm from "../task/components/TaskForm";
+import { useDialogStore } from "../../components/dialog/DialogStore";
 
 const Home: React.FC = () => {
-  const { open, openDialog, closeDialog } = useDialog();
+  const { openDialog, closeDialog } = useDialogStore();
 
   return (
     <div className="mb-8">
@@ -28,7 +29,6 @@ const Home: React.FC = () => {
       </div>
 
       <DialogComponent
-        open={open}
         onClose={closeDialog}
         title="New Task"
         content={<TaskForm />}

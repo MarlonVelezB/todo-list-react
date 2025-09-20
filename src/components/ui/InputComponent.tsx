@@ -8,6 +8,7 @@ interface InputFieldProps {
   error?: FieldError;
   placeholder?: string;
   multiline?: boolean;
+  required?: boolean;
   rows?: number;
   maximumCharacters?: number;
   countCharacters?: boolean;
@@ -42,7 +43,7 @@ const InputComponent = React.forwardRef<HTMLInputElement, InputFieldProps>(
             !!error && "text-red-500"
           }`}
         >
-          {label}:
+          {props.required && <span className="text-red-500 font-medium">*</span>}{label}:
         </label>
         <div>
           <TextField

@@ -11,12 +11,13 @@ interface DatePickerProps {
   placeholder?: string;
   name: string;
   format?: string;
+  required?: boolean;
   onChange: (value: Date | null) => void;
   onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
   value?: Date | null;
 }
 const DatePickerComponent = React.forwardRef<any, DatePickerProps>(
-  ({ label, error, name, value, format = "dd/MM/yyyy", onChange }, ref) => {
+  ({ label, error, name, value, format = "dd/MM/yyyy", onChange, required }, ref) => {
     return (
       <div className="w-full">
         <label
@@ -24,7 +25,7 @@ const DatePickerComponent = React.forwardRef<any, DatePickerProps>(
             !!error && "text-red-500"
           }`}
         >
-          {label}:
+          {required && <span className="text-red-500 font-medium">*</span>}{label}:
         </label>
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
           <DatePicker
