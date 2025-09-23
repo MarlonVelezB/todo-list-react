@@ -27,3 +27,12 @@ export interface TaskCounts {
   completed: number;
   pending: number;
 }
+
+export interface Category {
+  id: string;
+  name: string;
+  description?: string;
+  icon: string; // nombre del icono: "FaTshirt"
+  color?: string; // hex, tailwind, rgb, etc.
+  size?: number; // opcional: tamaño del icono
+}

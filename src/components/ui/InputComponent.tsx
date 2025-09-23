@@ -34,6 +34,7 @@ const InputComponent = React.forwardRef<HTMLInputElement, InputFieldProps>(
 
       // Actualizar contador
       setNumberCharacters(newValue.length);
+      onChange(event);
     };
 
     return (

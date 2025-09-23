@@ -3,9 +3,9 @@ import "./Sidebar.css";
 import type { SidebarMenuOption } from "../componentTypes";
 import {
   AiFillHome,
-  AiFillContainer,
   AiFillSetting,
 } from "react-icons/ai";
+import { BiSolidCategory } from "react-icons/bi";
 import SidebarOption from "./SidebarOption";
 import SidebarOptionDropdown from "./SidebarOptionDropdown";
 import SidebarFooter from "./SidebarFooter"; // Importamos el nuevo footer
@@ -18,15 +18,13 @@ const Sidebar: React.FC = () => {
 
   const options: SidebarMenuOption[] = [
     { label: "Home", path: "/", icon: <AiFillHome /> },
-    { label: "New Task", path: "/new-task", icon: <AiFillContainer /> },
+    { label: "Category", path: "/categories", icon: <BiSolidCategory /> },
     {
       label: "Settings",
       path: "/settings",
       icon: <AiFillSetting />,
       children: [
         { label: "Profile", path: "/settings/profile" },
-        { label: "Account", path: "/settings/account" },
-        { label: "Notifications", path: "/settings/notifications" },
       ],
     },
   ];
