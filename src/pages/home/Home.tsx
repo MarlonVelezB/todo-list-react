@@ -2,11 +2,10 @@ import React from "react";
 import ProgressStats from "./components/ProgressStats";
 import TaskFilters from "./components/TaskFilters";
 import TaskList from "./components/TaskList";
-import { Fab } from "@mui/material";
-import { FaPlus } from "react-icons/fa";
 import DialogComponent from "../../components/dialog/DialogComponent";
 import TaskForm from "../task/components/TaskForm";
 import { useDialogStore } from "../../components/dialog/DialogStore";
+import FloatingButton from "../../components/floatingButton/FloatingButton";
 
 const Home: React.FC = () => {
   const { openDialog, closeDialog } = useDialogStore();
@@ -22,11 +21,8 @@ const Home: React.FC = () => {
       <ProgressStats taskCounts={5} total={20} />
       <TaskFilters />
       <TaskList />
-      <div className="fixed bottom-6 right-6 z-50">
-        <Fab color="primary" aria-label="add" onClick={openDialog}>
-          <FaPlus />
-        </Fab>
-      </div>
+
+      <FloatingButton tooltip="Add Category" onClick={openDialog} />
 
       <DialogComponent
         onClose={closeDialog}
