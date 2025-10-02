@@ -10,8 +10,11 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
+import useTaskStore from "../../task/context/TaskContext";
+import { testCategories } from "../../../testData";
+import type { Category } from "../../../types/TaskTypes";
 
-type FilterType = "todas" | "activas" | "completadas";
+export type FilterType = "todas" | "activas" | "completadas";
 
 interface TaskFiltersProps {
   onFilterChange?: (filter: FilterType) => void;
@@ -19,14 +22,15 @@ interface TaskFiltersProps {
 }
 
 const TaskFilters: React.FC<TaskFiltersProps> = ({
-  onFilterChange,
   initialFilter = "todas",
 }) => {
   const [activeFilter, setActiveFilter] = useState<FilterType>(initialFilter);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState<Category | null>(null);
   const [priority, setPriority] = useState("");
-  const [order, setOrder] = useState(false);
+  const [orderSelected, setOrderSelected] = useState(false);
   const [orderType, setOrderType] = useState("");
+  const { setFilter, setFilterByCategory, setFilterByPriority, setOrder, setFilterByTitleOrDescription } =
+    useTaskStore();
 
   const filters: Array<{ key: FilterType; label: string; count?: number }> = [
     { key: "todas", label: "Todas" },
@@ -34,22 +38,52 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
     { key: "completadas", label: "Completadas" },
   ];
 
-  const handleFilterChange = (filter: FilterType) => {
-    setActiveFilter(filter);
-    onFilterChange?.(filter); // Llama al callback si se proporciona
+  const handleFilterChange = (filterType: FilterType) => {
+    setFilter(filterType);
+    setActiveFilter(filterType);
   };
 
   const handleChangeCategory = (event: SelectChangeEvent) => {
-    setCategory(event.target.value);
+    if (event.target.value === "") {
+      setCategory(null); // limpiado
+    } else {
+      const selected = testCategories.find(
+        (cat) => cat.name.toLowerCase() === event.target.value
+      );
+      setCategory(selected ?? null);
+    }
+    setFilterByCategory(event.target.value);
   };
 
   const handleChangeOrderType = (event: SelectChangeEvent) => {
-    setOrderType(event.target.value);
+    if (event.target.value === "") {
+      setOrderType("");
+      setOrder("", orderSelected);
+    }else{
+      setOrderType(event.target.value);
+      setOrderSelected(false)
+      setOrder(event.target.value, orderSelected);
+    }
+  };
+
+  const handleChangeOrderAscending = () => {
+    const ascending = !orderSelected;
+    setOrder(orderType, ascending);
+    setOrderSelected((prevSelected) => !prevSelected);
   };
 
   const handleChangePriority = (event: SelectChangeEvent) => {
-    setPriority(event.target.value);
+    setFilterByPriority(event.target.value as any);
+    if (event.target.value === "") {
+      setPriority("");
+    } else {
+      setPriority(event.target.value);
+    }
   };
+
+  const hadleInputFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilterByTitleOrDescription(event.target.value);
+  }
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm mb-6 mt-6">
@@ -72,36 +106,46 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
           className="flex-1" // Ocupa todo el espacio disponible
           label="Buscar tareas..."
           variant="outlined"
+          onChange={hadleInputFilter}
         />
 
         <FormControl className="w-90">
-          <InputLabel id="category-select-label">Categorías</InputLabel>
+          <InputLabel id="category-select-label">Categories</InputLabel>
           <Select
             name="category"
             labelId="category-select-label"
             id="category-select"
-            value={category}
-            label="Categorías"
+            value={category?.name.toLowerCase() ?? ""}
+            label="Categories"
             onChange={handleChangeCategory}
           >
-            <MenuItem value="trabajo">Trabajo</MenuItem>
-            <MenuItem value="personal">Personal</MenuItem>
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {testCategories.map((cat) => (
+              <MenuItem key={cat.id} value={cat.name.toLowerCase()}>
+                {cat.name}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
 
         <FormControl className="w-90">
-          <InputLabel id="priority-select-label">Prioridad</InputLabel>
+          <InputLabel id="priority-select-label">Priority</InputLabel>
           <Select
             name="priority"
             labelId="priority-select-label"
             id="priority-select"
             value={priority}
-            label="Prioridad"
+            label="Priority"
             onChange={handleChangePriority}
           >
-            <MenuItem value="alta">Alta</MenuItem>
-            <MenuItem value="media">Media</MenuItem>
-            <MenuItem value="baja">Baja</MenuItem>
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value="high">High</MenuItem>
+            <MenuItem value="medium">Medium</MenuItem>
+            <MenuItem value="low">Low</MenuItem>
           </Select>
         </FormControl>
       </div>
@@ -117,18 +161,22 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
             value={orderType}
             onChange={handleChangeOrderType}
           >
-            <MenuItem value="titulo">Título</MenuItem>
-            <MenuItem value="fecha">Fecha vencimiento</MenuItem>
-            <MenuItem value="prioridad">Prioridad</MenuItem>
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            <MenuItem value="title">Title</MenuItem>
+            <MenuItem value="date">Date</MenuItem>
+            <MenuItem value="priority">Priority</MenuItem>
           </Select>
         </FormControl>
 
         <ToggleButton
           value="check"
-          selected={order}
-          onChange={() => setOrder((prevSelected) => !prevSelected)}
+          selected={orderSelected}
+          onChange={handleChangeOrderAscending}
+          disabled={!orderType === true}
         >
-          {order ? (
+          {orderSelected ? (
             <div className="flex flex-row items-center gap-2">
               <FaLongArrowAltDown className="text-lg" />
               <span>Desendente</span>
@@ -141,8 +189,6 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
           )}
         </ToggleButton>
       </div>
-
-      {/* IMPLEMENTAR LISTA DE CARDS DE LAS TAREAS Y LA PANTALLA PARA CREAR LA TAREA */}
     </div>
   );
 };
