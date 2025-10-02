@@ -8,7 +8,7 @@ import ButtoComponent from "../../../components/ui/ButtonComponent";
 import { FaFolder, FaPlus } from "react-icons/fa";
 import IconSelector from "./IconSelector";
 import ColorPicker from "./ColorPicker";
-import { iconMap } from "../../../testData";
+import { iconMap, testCategories } from "../../../testData";
 import { lightenColor } from "../../../utils/utils";
 
 // Schema de validación con Yup
@@ -55,6 +55,14 @@ const CategoeryForm = () => {
 
   const onSubmit = (data: any) => {
     console.log("Datos:", data);
+    testCategories.push({
+      id: `${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+      name: data.categoryName,
+      description: data.categoryDescription,
+      icon: data.categoryIcon,
+      color: data.categoryColor,
+      size: 28,
+    });
     closeDialog();
   };
 
