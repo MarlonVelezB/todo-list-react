@@ -6,13 +6,19 @@ import FloatingButton from "../../components/floatingButton/FloatingButton";
 import DialogComponent from "../../components/dialog/DialogComponent";
 import { useDialogStore } from "../../components/dialog/DialogStore";
 import CategoeryForm from "./components/CategoryForm";
+import useTaskStore from "../task/context/TaskContext";
 
 const CategoryPage = () => {
   const { openDialog, closeDialog } = useDialogStore();
-  const handleAddCategory = () => {
-    // Logic to add a new category
-    alert("Add Category button clicked");
+  const { originalTasks } = useTaskStore();
+
+  const getTaskCountByCategory = (category: string) => {
+    if (!category) return 0;
+    return originalTasks.filter(
+      (task) => task.category?.toLowerCase() === category.toLowerCase()
+    ).length;
   };
+
   return (
     <div>
       <h1 className="text-3xl font-bold text-foreground mb-2">
@@ -28,18 +34,26 @@ const CategoryPage = () => {
         iconButton={<FaPlus />}
         textButton="Add Category"
         colorButton="#2563eb"
-        onClickButton={handleAddCategory}
+        onClickButton={openDialog}
       >
         {testCategories.map((category) => (
           <div className="mb-4" key={category.id}>
-            <CategoryCard key={category.id} category={category} />
+            <CategoryCard
+              key={category.id}
+              category={category}
+              taskCount={getTaskCountByCategory(category.name)}
+            />
           </div>
         ))}
       </SectionComponent>
 
       <FloatingButton tooltip="Add Category" onClick={openDialog} />
 
-      <DialogComponent title="New Category" onClose={closeDialog} content={<CategoeryForm/>}/>
+      <DialogComponent
+        title="New Category"
+        onClose={closeDialog}
+        content={<CategoeryForm />}
+      />
     </div>
   );
 };

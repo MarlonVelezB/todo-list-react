@@ -7,9 +7,11 @@ import { lightenColor } from "../../../utils/utils";
 const CategoryCard = ({
   category,
   className,
+  taskCount
 }: {
   category: Category;
   className?: string;
+  taskCount: number;
 }) => {
   const IconComponent = iconMap[category.icon];
 
@@ -38,7 +40,7 @@ const CategoryCard = ({
 
       <div className="ml-auto flex items-center gap-1">
         <span className="text-xs italic mr-7 text-blue-500 font-bold">
-          1 tareas
+          {taskCount ? taskCount : 0} tasks
         </span>
         <IconButton aria-label="edit">
           <MdModeEdit size={18} />
