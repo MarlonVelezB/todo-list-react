@@ -1,24 +1,29 @@
 import { Checkbox, Chip, IconButton } from "@mui/material";
 import { MdDelete, MdEdit } from "react-icons/md";
 import type { Task } from "../../../types/TaskTypes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { testTasks } from "../../../testData";
 import { FaCalendar } from "react-icons/fa";
 import { RiErrorWarningFill } from "react-icons/ri";
+import useTaskStore from "../../task/context/TaskContext";
 
 const TaskList: React.FC = () => {
   const label = { inputProps: { "aria-label": "completed" } };
   const [hoveredTaskId, setHoveredTaskId] = useState<number | null>(null);
-  const [tasks, setTasks] = useState<Task[]>(testTasks);
+  const { setTasks, tasks } = useTaskStore();
+
+  useEffect(() => {
+    // Cargar las tareas de prueba al montar el componente
+    setTasks(testTasks);
+  }, [setTasks]);
 
   const handleTaskToggle = (taskId: number) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === taskId
-          ? { ...task, completed: !task.completed, updatedAt: new Date() }
-          : task
-      )
+    const updatedTasks = tasks.map((task) =>
+      task.id === taskId
+        ? { ...task, completed: !task.completed, updatedAt: new Date() }
+        : task
     );
+    setTasks(updatedTasks);
   };
 
   const isExpiredTask = (dueDate: Date): boolean => {
